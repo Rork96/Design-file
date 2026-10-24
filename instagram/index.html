@@ -1,0 +1,58 @@
+<!-- @dsCard group="Instagram" viewport="1200x720" name="Instagram templates" subtitle="Question post, list post, story, colour board" -->
+<!doctype html><html><head><meta charset="utf-8"><title>Paulrork — Instagram kit</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+<script src="../../ds-fallback.js"></script>
+<style>body{margin:0;background:#1E1E1E;color:var(--rork-paper);font-family:var(--font-mono);font-size:13px}button{font:inherit;cursor:pointer}</style>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const KIT = ["QuestionPost", "ListPost", "StoryTemplate", "ColourBoard", "CasePost", "WordListStory", "WroclawPost", "CarouselSlide", "HighlightCover"];
+window.dsReady.then(DS => window.dsLoad(KIT.map(n => n + ".jsx"), KIT, DS).then(K => {
+  const { QuestionPost, ListPost, StoryTemplate, ColourBoard, CasePost, WordListStory, WroclawPost, CarouselSlide, HighlightCover } = K;
+  const TABS = [["all", "All"], ["question", "Instagram post - 4"], ["list", "Instagram post - 6"], ["case", "Кейс"], ["wroclaw", "Вроцлав"], ["words", "Story - 9"], ["art", "Готові макети"], ["carousel", "Карусель"], ["highlights", "Хайлайти"], ["story", "Story"], ["board", "Story ideal Lines"]];
+  const Btn = ({ on, children, ...p }) => <button {...p} style={{ padding: "8px 12px", border: "1px solid " + (on ? "var(--rork-lime)" : "#3a3a3a"), background: on ? "var(--rork-lime)" : "transparent", color: on ? "var(--rork-ink)" : "var(--rork-paper)", borderRadius: 0 }}>{children}</button>;
+  const Frame = ({ name, children }) => <div style={{ display: "flex", flexDirection: "column", gap: 10 }}><div style={{ color: "#9a9a9a" }}>{name}</div>{children}</div>;
+  function App() {
+    const [tab, setTab] = React.useState(localStorage.getItem("rork-kit-tab") || "all");
+    const [guides, setGuides] = React.useState(true);
+    const [slots, setSlots] = React.useState(true);
+    React.useEffect(() => localStorage.setItem("rork-kit-tab", tab), [tab]);
+    const big = tab !== "all";
+    return <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", padding: "14px 24px", borderBottom: "1px solid #2c2c2c" }}>
+        {TABS.map(([k, l]) => <Btn key={k} on={tab === k} onClick={() => setTab(k)}>{l}</Btn>)}
+        <div style={{ flex: 1 }} />
+        <Btn on={slots} onClick={() => setSlots(!slots)}>Photo slots</Btn>
+        <Btn on={guides} onClick={() => setGuides(!guides)}>Story guides</Btn>
+      </div>
+      <div style={{ display: "flex", gap: 48, flexWrap: "wrap", alignItems: "flex-start", padding: 32 }}>
+        {(tab === "all" || tab === "question") && <Frame name="Instagram post - 4"><QuestionPost slots={slots} scale={big ? 0.6 : 0.4} /></Frame>}
+        {(tab === "all" || tab === "list") && <Frame name="Instagram post - 6"><ListPost slots={slots} scale={big ? 0.6 : 0.4} /></Frame>}
+        {(tab === "all" || tab === "case") && ["cover","table","photo"].map(v => <Frame key={v} name={"Кейс — " + v}><CasePost variant={v} scale={big ? 0.4 : 0.3} /></Frame>)}
+        {(tab === "all" || tab === "wroclaw") && <Frame name="Вроцлав"><WroclawPost scale={big ? 0.6 : 0.4} /></Frame>}
+        {(tab === "all" || tab === "words") && <Frame name="Instagram story - 9"><WordListStory guides={guides} scale={big ? 0.34 : 0.225} /></Frame>}
+        {(tab === "art") && [["wroclaw-crest.svg","Вроцлав (1080²)",420],["ticket-to-canada.svg","Ticket to Canada (1080²)",420],["foodtruck.svg","Кейс — 3 слайди каруселі (3635×1080)",1260]].map(([f,n,w]) => <Frame key={f} name={n}><img src={"../../assets/illustrations/" + f} style={{width:w,display:"block"}} /></Frame>)}
+        {(tab === "all" || tab === "carousel") && <Frame name="Карусель — blue"><div style={{display:"flex",gap:16}}>
+          <CarouselSlide kind="cover" index={1} scale={big ? 0.36 : 0.26} />
+          <CarouselSlide kind="point" index={2} number={1} title="Корисна інформація" body="Ділюсь тим, що працює на практиці." scale={big ? 0.36 : 0.26} />
+          <CarouselSlide kind="end" index={5} title="Пиши мені" body="Підписуйся і став запитання в коментарях." scale={big ? 0.36 : 0.26} /></div></Frame>}
+        {(tab === "carousel") && <Frame name="Карусель — lime"><div style={{display:"flex",gap:16}}>
+          <CarouselSlide theme="lime" kind="cover" index={1} scale={0.36} />
+          <CarouselSlide theme="lime" kind="point" index={2} number={2} title="Рідні шарять" body="Обожнюю, коли рідні розуміються на моїх темах." scale={0.36} />
+          <CarouselSlide theme="lime" kind="end" index={5} title="Пиши мені" body="Підписуйся і став запитання в коментарях." scale={0.36} /></div></Frame>}
+        {(tab === "all" || tab === "highlights") && <Frame name="Highlight covers (1080×1920, circle crop)"><div style={{display:"flex",gap:16}}>
+          <HighlightCover label="Кейси" theme="blue" showCrop={guides} scale={big ? 0.24 : 0.16} />
+          <HighlightCover label="Про мене" theme="lime" mark="Я" showCrop={guides} scale={big ? 0.24 : 0.16} />
+          <HighlightCover label="Вроцлав" theme="indigo" mark="W" showCrop={guides} scale={big ? 0.24 : 0.16} />
+          <HighlightCover label="Поради" theme="ink" showCrop={guides} scale={big ? 0.24 : 0.16} /></div></Frame>}
+        {(tab === "all" || tab === "story") && <Frame name="Instagram story - 13"><StoryTemplate guides={guides} scale={big ? 0.34 : 0.225} /></Frame>}
+        {(tab === "board") && <Frame name="Story ideal Lines"><ColourBoard guides={guides} scale={0.26} /></Frame>}
+      </div>
+    </div>;
+  }
+  ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+}));
+</script></body></html>

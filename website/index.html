@@ -1,0 +1,22 @@
+<!-- @startingPoint section="Website" subtitle="Portfolio site: home, cases, case page, services, about, contact" viewport="1280x900" -->
+<!-- @dsCard group="Website" viewport="1280x900" name="Website kit" subtitle="Dark portfolio site, desktop + mobile" -->
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Paul Rork</title>
+<link rel="stylesheet" href="website.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="../../ds-fallback.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+window.dsLoad(["Chrome.jsx","Pages.jsx"].map(f => f), ["Btn","Bullet","SectionHead","Nav","Footer","Home","Cases","CaseDetail","Services","About","Contact"], {}).then(K => {
+  const { Nav, Footer, Home, Cases, CaseDetail, Services, About, Contact } = K;
+  function App() {
+    const init = (location.hash || "#home").slice(1).split("/");
+    const [s, setS] = React.useState({ page: init[0] || "home", id: init[1] });
+    const go = (page, id) => { setS({ page, id }); location.hash = id ? page + "/" + id : page; window.scrollTo(0, 0); };
+    const P = { home: <Home go={go} />, cases: <Cases go={go} />, case: <CaseDetail id={s.id} go={go} />, services: <Services go={go} />, about: <About />, contact: <Contact /> }[s.page] || <Home go={go} />;
+    return <><Nav page={s.page} go={go} /><main>{P}</main><Footer go={go} /></>;
+  }
+  ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+});
+</script></body></html>
