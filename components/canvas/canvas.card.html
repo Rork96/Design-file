@@ -1,0 +1,20 @@
+<!-- @dsCard group="Components" viewport="700x340" name="Canvas" -->
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+<script src="../../ds-fallback.js"></script>
+<style>body{margin:0;background:#FCFCFC;font-family:var(--font-mono);font-size:11px;color:var(--rork-ink)}</style></head><body><div id="root"></div>
+<script type="text/babel">
+window.dsReady.then(DS => {
+const { Canvas, PhotoSlot, SwatchTile, StoryGuides } = DS;
+ReactDOM.createRoot(root).render(<div style={{display:"flex",gap:28,padding:24,alignItems:"flex-start"}}>
+<div style={{display:"flex",flexDirection:"column",gap:6}}><Canvas scale={0.24} background="var(--rork-lime-2)">
+<PhotoSlot x={258} y={0} w={139} h={164}/><PhotoSlot x={0} y={602} w={172} h={78}/><PhotoSlot x={228} y={911} w={139} h={169}/><PhotoSlot x={905} y={986} w={175} h={94}/></Canvas>Canvas post + PhotoSlot</div>
+<div style={{display:"flex",flexDirection:"column",gap:6}}><Canvas format="story" scale={0.15} background="var(--surface-support)"><StoryGuides/></Canvas>Story + StoryGuides</div>
+<div style={{display:"grid",gridTemplateColumns:"auto auto",gap:22,padding:12}}>
+<SwatchTile size={60} stroke={8} color="var(--rork-indigo)"/><SwatchTile size={60} stroke={8} color="var(--rork-blue-deep)"/>
+<SwatchTile size={60} stroke={8} color="var(--rork-ink)"/><SwatchTile size={60} stroke={8} color="var(--rork-paper)"/></div></div>);
+});
+</script></body></html>
